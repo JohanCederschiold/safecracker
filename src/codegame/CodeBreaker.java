@@ -96,7 +96,7 @@ public class CodeBreaker {
 		
 //		Check if its a win
 		if (noCorrect == numbers.length) {
-			return "You are right\n";
+			return "You are right";
 //		Check if any numbers are in the correct place. 
 		} else if (noCorrect > 0 ) {
 			answer += String.format("You have %d numbers correct. ", noCorrect);
@@ -120,5 +120,7 @@ public class CodeBreaker {
 		return answer;
 
 	}
+	
+
 
 }

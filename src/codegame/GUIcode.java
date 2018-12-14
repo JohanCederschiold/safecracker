@@ -72,11 +72,14 @@ public class GUIcode extends JFrame {
 		
 		int userGuess = 0;
 		
+		System.out.println(myGuess.getText());
+		
 		try {
+			
 			userGuess = Integer.parseInt(myGuess.getText());
 			String feedbackOnGuess = myGuess.getText() + " " + code.betterCheckNumbers(userGuess);
 			feedback.append(feedbackOnGuess);
-			if (feedbackOnGuess.trim().equals("You are right")) {
+			if (feedbackOnGuess.equals("You are right")) {
 				guess.setEnabled(false);
 			}
 			
@@ -88,9 +91,9 @@ public class GUIcode extends JFrame {
 	
 	public void newGame () {
 		
-		feedback.setText("");
-		code.createNewCode();
-		guess.setEnabled(true);
+		feedback.setText(""); 	//clears the textarea
+		code.createNewCode();	//Reguests a new code
+		guess.setEnabled(true); //Enables the guess button
 		
 		
 	}
