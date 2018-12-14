@@ -12,7 +12,7 @@ public class Main {
 		
 		GUIcode gui = new GUIcode();
 
-		
+
 		
 		
 		

@@ -4,58 +4,41 @@ import java.util.Random;
 
 public class CodeBreaker {
 	
-	
-	private int currentCode;
+//	Intance variables
 	private char [] numbers;
+	private final int safecodeLenght = 5;
+	private boolean win = false;
 	
 	
 //	Constructor
 	public CodeBreaker () {
 		
 	}
-	
-//	Creates a new code and "translates" to a chararray.
-	public void createNewCode () {
-		
-		genenerateCode();
-		numbers = codeToString(currentCode);
-		
-	}
-	
-	
-//	Generates a new five digit code for instance variable
-	private void genenerateCode() {
-		
-		Random random = new Random ();
-		currentCode = random.nextInt(899)+100;
 
-	}
 	
-	
-//	Converts parameter to charArray.
-	private char[] codeToString(int convertThis) {
+	public void createNewCode ()  {
 		
-		String currentCodeString = Integer.toString(convertThis);
-		return currentCodeString.toCharArray();
+//		Resets the win boolean to false to start new round.
+		win = false;
+		
+//		numbers = new char [safecodeLenght];
+		Random random = new Random();
+		String numberAsString = "";
+		
+//		Concatenates the no to the string. 
+		for (int i = 0 ; i < safecodeLenght ; i++ ) {
+			numberAsString += random.nextInt(10);
+		}
+		
+//		Transforms the string to chararray.
+		numbers = numberAsString.toCharArray();
 		
 	}
 
-	
-//	Return the int code
-	public int getCurrentCode () {
-		return currentCode;
-	}
-	
-//	Returns a chararray with the numbers. 
-	public char [] getCurrentCodeString () {
-		return numbers;
-	}
-	
-	
+
 //	Return the quantity of numbers that are in the correct place.
-	public int checkNoInPlace (int number) {
+	public int checkNoInPlace (char [] nos) {
 			
-		char [] nos = codeToString(number); //Convert number
 		if (nos.length != numbers.length) {
 			return -1; //The userguess is not in the same span as the number. 
 		}
@@ -72,9 +55,7 @@ public class CodeBreaker {
 	}
 	
 //	Checks if there are numbers that are correct but in the wrong place. 
-	public boolean checkNoInWrongPlace(int number) {
-		
-		char [] nos = codeToString(number);
+	public boolean checkNoInWrongPlace(char [] nos) {
 		
 		for (int i = 0; i < nos.length ; i++ ) {
 			for (int j = 0; j < nos.length ; j++ ) {
@@ -86,16 +67,17 @@ public class CodeBreaker {
 		return false;
 	}
 	
-	
-	public String betterCheckNumbers (int number) {
+//	This method uses checknoinplace() and checknoinwrongplace() to return a result as string. 
+	public String betterCheckNumbers (char [] nos) {
 		
 		String answer ="";
 		
 	
-		int noCorrect = checkNoInPlace(number);
+		int noCorrect = checkNoInPlace(nos);
 		
 //		Check if its a win
 		if (noCorrect == numbers.length) {
+			win = true;
 			return "You are right";
 //		Check if any numbers are in the correct place. 
 		} else if (noCorrect > 0 ) {
@@ -110,7 +92,7 @@ public class CodeBreaker {
 		}
 		
 //		Check if the user has entered one of the correct numbers in the wrong place. 
-		if (checkNoInWrongPlace(number)) {
+		if (checkNoInWrongPlace(nos)) {
 			answer += "You have correct numbers in the wrong places.";
 		}
 		
@@ -121,6 +103,16 @@ public class CodeBreaker {
 
 	}
 	
+	public boolean isWin () {
+		return win;
+	}
+	
+//	Return the char array code
+	public char [] getCurrentCode () {
+		return numbers;
+	}
+	
+ 	
 
 
 }

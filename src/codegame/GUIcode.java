@@ -70,22 +70,32 @@ public class GUIcode extends JFrame {
 	
 	public void checkGuess () {
 		
-		int userGuess = 0;
+//		Get user guess and convert it to char array
+		char [] userGuess = myGuess.getText().toCharArray();
 		
-		System.out.println(myGuess.getText());
-		
-		try {
-			
-			userGuess = Integer.parseInt(myGuess.getText());
-			String feedbackOnGuess = myGuess.getText() + " " + code.betterCheckNumbers(userGuess);
-			feedback.append(feedbackOnGuess);
-			if (feedbackOnGuess.equals("You are right")) {
-				guess.setEnabled(false);
-			}
-			
-		} catch (NumberFormatException nfe) {
-			feedback.append("You entered an incorrect format\n");
+//		Check if the user actually put something in the textfield. 
+		if (userGuess.length < 1) {
+			feedback.append("You didn't make a guess!\n");
+			return;
 		}
+		
+//		check that its only digits in the users guess
+		for (char character : userGuess) {
+			if (!Character.isDigit(character)) {
+				feedback.append("Sorry - that is not a valid guess!\n");
+				return;
+			}
+		}
+		
+//		Sends to codebreaker
+		feedback.append(myGuess.getText() + " -- " + code.betterCheckNumbers(userGuess));
+		
+		if (code.isWin()) {
+			guess.setEnabled(false);
+		}
+		
+		
+
 		
 	}
 	
