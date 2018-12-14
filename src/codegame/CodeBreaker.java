@@ -6,7 +6,7 @@ public class CodeBreaker {
 	
 //	Intance variables
 	private char [] numbers;
-	private final int safecodeLenght = 5;
+	private final int safecodeLenght = 3;
 	private boolean win = false;
 	
 	
