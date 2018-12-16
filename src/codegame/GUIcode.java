@@ -5,8 +5,12 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URL;
 import java.util.Scanner;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -44,7 +48,7 @@ public class GUIcode extends JFrame {
 	private Timer tim;
 	private int standardTime = 60;
 	private int questionTime;
-	
+
 	
 	
 	public GUIcode () {
@@ -94,6 +98,8 @@ public class GUIcode extends JFrame {
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
+//		Create soundfile
+
 		
 		
 	}
@@ -206,10 +212,13 @@ public class GUIcode extends JFrame {
 	
 	public void lostGame() {
 //		The user has run out of attempts. 
-		if (noGuesses <= 0) {
+		if (noGuesses <= 0 && !code.isWin()) {
 			feedback.append("---The alarm was triggered---");
 			guess.setEnabled(false);
 			tim.stop();
+			Siren siren = new Siren();
+			siren.thread.start();
+
 		}
 	}
 	
