@@ -26,21 +26,21 @@ public class GUIcode extends JFrame {
 	
 //	Panels
 	private JPanel topPanel;
+	private JPanel feedbackPanel;
 	private JPanel centerPanel;
 	private JPanel bottomPanel;
 	
 //	Components
 	private JLabel userScoreAndTimeRemaining;
 	private JTextArea feedback;
-	private JTextField myGuess;
 	private JButton instructions;
 	private JButton guess;
 	private JButton newGame;
 	private JCheckBox timerOnOrOff;
-	
+	private Numberpanel [] nopanel;
 	
 //	Look
-	private Font font = new Font("Arial Black", Font.PLAIN, 18 );
+	private Font font = new Font("Arial Black", Font.PLAIN, 16 );
 	
 //	Game
 	private CodeBreaker code;
@@ -56,13 +56,12 @@ public class GUIcode extends JFrame {
 		setLayout(new BorderLayout());
 		code = new CodeBreaker();
 		
-
-		
 //		Add panels
 		add(topPanel = new JPanel(), BorderLayout.NORTH);
+		add(feedbackPanel = new JPanel(), BorderLayout.EAST);
 		add(centerPanel = new JPanel(), BorderLayout.CENTER);
 		add(bottomPanel = new JPanel(), BorderLayout.SOUTH);
-		centerPanel.setPreferredSize(new Dimension(1200 ,400));
+		feedbackPanel.setPreferredSize(new Dimension(500,400));
 		
 //		Add components
 		topPanel.add(userScoreAndTimeRemaining = new JLabel());
@@ -70,19 +69,19 @@ public class GUIcode extends JFrame {
 		upDateScore();
 		topPanel.add(timerOnOrOff = new JCheckBox("Timer"));
 		timerOnOrOff.setFont(font);
-		centerPanel.add(feedback = new JTextArea(30,60));
+		feedbackPanel.add(feedback = new JTextArea(15,25));
 		feedback.setFont(font);
 		feedback.setLineWrap(true);feedback.setWrapStyleWord(true); //Linebreak & only whole words
 		bottomPanel.add(instructions = new JButton("Instructions"));
-		bottomPanel.add(myGuess = new JTextField(5));
-		myGuess.setFont(font);
 		bottomPanel.add(guess = new JButton ("Guess"));
 		bottomPanel.add(newGame = new JButton("New game"));
 		
-//		TEST
-		Numberpanel np = new Numberpanel();
-		add(np, BorderLayout.WEST);
-		
+//		Numberpanels;
+		nopanel = new Numberpanel[code.getSafecodeLength()];
+		for (int i = 0 ; i < code.getSafecodeLength() ; i++) {
+			centerPanel.add(nopanel[i] = new Numberpanel());
+		}
+	
 //		Set up new game.
 		tim = new Timer(1000, e -> countdown());
 		newGame();
@@ -113,26 +112,10 @@ public class GUIcode extends JFrame {
 		noGuesses--; //Increments the number of guesses regardless of correct syntax or not. 
 		questionTime = standardTime;
 		upDateScore();
-		
-//		Get user guess and convert it to char array
-		char [] userGuess = myGuess.getText().toCharArray();
-		
-//		Check if the user actually put something in the textfield. 
-		if (userGuess.length < 1) {
-			feedback.append("You didn't make a guess!\n");
-			return;
-		}
-		
-//		check that its only digits in the users guess
-		for (char character : userGuess) {
-			if (!Character.isDigit(character)) {
-				feedback.append("Sorry - that is not a valid guess!\n");
-				return;
-			}
-		}
+
 		
 //		Sends to codebreaker
-		feedback.append(myGuess.getText() + " -- " + code.betterCheckNumbers(userGuess));
+		feedback.append(code.betterCheckNumbers(getUserCombination()));
 		
 //		Checks if it's a win
 		if (code.isWin()) {
@@ -175,6 +158,7 @@ public class GUIcode extends JFrame {
 	}
 	
 	public void countdown() {
+//		Gets called by ActionListener timer. 
 		questionTime--;
 		if (questionTime < 1)  {
 			noGuesses--;
@@ -218,12 +202,25 @@ public class GUIcode extends JFrame {
 //		The user has run out of attempts. 
 		if (noGuesses <= 0 && !code.isWin()) {
 			feedback.append("---The alarm was triggered---");
-			guess.setEnabled(false);
-			tim.stop();
-			Siren siren = new Siren();
+			guess.setEnabled(false); 	//Activate guess button
+			tim.stop();					//Stop the timer
+			Siren siren = new Siren();	//Launch "alarm".
 			siren.thread.start();
 
 		}
+	}
+	
+	public char [] getUserCombination () {
+		
+		String userCombination ="";
+		
+		for (int i = 0 ; i < code.getSafecodeLength() ; i++) {
+			userCombination += nopanel[i].getCurrentNo();
+			feedback.append(Integer.toString(nopanel[i].getCurrentNo()));
+		}
+		
+		return userCombination.toCharArray();
+		
 	}
 	
 

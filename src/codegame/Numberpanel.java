@@ -39,7 +39,7 @@ public class Numberpanel extends JPanel {
 	}
 	
 	public String makeFileName () { 
-		return currentno + ".png";
+		return currentno + ".jpg";
 		
 	}
 	
@@ -75,6 +75,10 @@ public class Numberpanel extends JPanel {
 		click.thread.start();
 		number.setIcon(new ImageIcon(filePath + makeFileName()));
 		
+	}
+	
+	public int getCurrentNo() {
+		return currentno;
 	}
 	
 	

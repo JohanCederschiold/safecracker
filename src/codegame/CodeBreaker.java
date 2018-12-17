@@ -81,19 +81,20 @@ public class CodeBreaker {
 			return "You are right";
 //		Check if any numbers are in the correct place. 
 		} else if (noCorrect > 0 ) {
-			answer += String.format("You have %d numbers correct. ", noCorrect);
+			answer += String.format("Correct: %d  ", noCorrect);
 //		Check that the number is not too long or too short
 		} else if (noCorrect == -1) {
 			return "The number is not the same number of numbers\n";
 //		Else no numbers are correct. 
-		} else {
-			answer += "No numbers are in the correct place. ";
-
-		}
+		} 
+//		else {
+//			answer += "No numbers are in the correct place. ";
+//
+//		}
 		
 //		Check if the user has entered one of the correct numbers in the wrong place. 
 		if (checkNoInWrongPlace(nos)) {
-			answer += "You have correct numbers in the wrong places.";
+			answer += "Correct nos present";
 		}
 		
 //		Concatenate new line to the answer. 
@@ -110,6 +111,10 @@ public class CodeBreaker {
 //	Return the char array code
 	public char [] getCurrentCode () {
 		return numbers;
+	}
+	
+	public int getSafecodeLength () {
+		return safecodeLenght;
 	}
 	
  	
