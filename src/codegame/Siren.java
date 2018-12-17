@@ -14,7 +14,6 @@ public class Siren implements Runnable {
 	
 //	Sounds
 	private AudioInputStream ai;
-	private File wavFile = new File("C:\\Users\\ceder\\Downloads\\Woop Woop-SoundBible.com-198943467.wav");
 	private Clip clip;
 	
 	public Siren () {
@@ -24,7 +23,7 @@ public class Siren implements Runnable {
 	@Override
 	public void run() {
 		try {
-			ai = AudioSystem.getAudioInputStream(wavFile);
+			ai = AudioSystem.getAudioInputStream(getClass().getClassLoader().getResource("alarm.wav"));
 			clip = AudioSystem.getClip();
 			clip.open(ai);
 			clip.start();

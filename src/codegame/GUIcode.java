@@ -69,7 +69,7 @@ public class GUIcode extends JFrame {
 		upDateScore();
 		topPanel.add(timerOnOrOff = new JCheckBox("Timer"));
 		timerOnOrOff.setFont(font);
-		feedbackPanel.add(feedback = new JTextArea(15,25));
+		feedbackPanel.add(feedback = new JTextArea(15,28));
 		feedback.setFont(font);
 		feedback.setLineWrap(true);feedback.setWrapStyleWord(true); //Linebreak & only whole words
 		bottomPanel.add(instructions = new JButton("Instructions"));
@@ -101,17 +101,14 @@ public class GUIcode extends JFrame {
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-//		Create soundfile
-
-		
 		
 	}
 	
 	public void checkGuess () {
 		
-		noGuesses--; //Increments the number of guesses regardless of correct syntax or not. 
-		questionTime = standardTime;
-		upDateScore();
+		noGuesses--; 
+		questionTime = standardTime; 	//Resets the timer
+		upDateScore();					//Update score
 
 		
 //		Sends to codebreaker
@@ -124,7 +121,7 @@ public class GUIcode extends JFrame {
 		}
 		
 //		Check if the attempts are up.
-		lostGame();
+		isLost();
 		
 		
 
@@ -165,9 +162,10 @@ public class GUIcode extends JFrame {
 			questionTime = standardTime;
 		}
 		upDateScore();
-		lostGame();
+		isLost();
 	}
 	
+//	If toggles the timer on and off.
 	public void toggleTimer () {
 		
 		if (timerOnOrOff.isSelected()) {
@@ -198,10 +196,11 @@ public class GUIcode extends JFrame {
 
 	}
 	
-	public void lostGame() {
+	public void isLost() {
 //		The user has run out of attempts. 
 		if (noGuesses <= 0 && !code.isWin()) {
 			feedback.append("---The alarm was triggered---");
+			System.out.println(code.getCurrentCode());
 			guess.setEnabled(false); 	//Activate guess button
 			tim.stop();					//Stop the timer
 			Siren siren = new Siren();	//Launch "alarm".
@@ -216,8 +215,12 @@ public class GUIcode extends JFrame {
 		
 		for (int i = 0 ; i < code.getSafecodeLength() ; i++) {
 			userCombination += nopanel[i].getCurrentNo();
-			feedback.append(Integer.toString(nopanel[i].getCurrentNo()));
+			feedback.append(Integer.toString(nopanel[i].getCurrentNo())); //Prints out the combination for feedback to user
 		}
+		
+		feedback.append("   "); //Puts a space behind the figures
+		
+		
 		
 		return userCombination.toCharArray();
 		

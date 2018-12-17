@@ -12,7 +12,6 @@ public class Numberpanel extends JPanel {
 	private JButton up;
 	private JButton down;
 	private JLabel number;
-//	private String filePath = "C:\\Users\\ceder\\Documents\\Yrgo filer\\Programfiler\\CodeGame\\";
 	private int currentno;
 	
 	
@@ -71,8 +70,8 @@ public class Numberpanel extends JPanel {
 	
 	public void getNewImage() {
 
-		Click click = new Click();
-		click.thread.start();
+//		Click click = new Click();
+//		click.thread.start();
 		number.setIcon(new ImageIcon(getClass().getClassLoader().getResource(makeFileName())));
 		
 	}

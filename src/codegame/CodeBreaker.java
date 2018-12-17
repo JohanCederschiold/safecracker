@@ -21,7 +21,6 @@ public class CodeBreaker {
 //		Resets the win boolean to false to start new round.
 		win = false;
 		
-//		numbers = new char [safecodeLenght];
 		Random random = new Random();
 		String numberAsString = "";
 		
@@ -78,23 +77,15 @@ public class CodeBreaker {
 //		Check if its a win
 		if (noCorrect == numbers.length) {
 			win = true;
-			return "You are right";
+			return "Safedoor opens";
 //		Check if any numbers are in the correct place. 
 		} else if (noCorrect > 0 ) {
-			answer += String.format("Correct: %d  ", noCorrect);
-//		Check that the number is not too long or too short
-		} else if (noCorrect == -1) {
-			return "The number is not the same number of numbers\n";
-//		Else no numbers are correct. 
-		} 
-//		else {
-//			answer += "No numbers are in the correct place. ";
-//
-//		}
+			answer += String.format("Correct: %d. ", noCorrect);
+		}
 		
 //		Check if the user has entered one of the correct numbers in the wrong place. 
 		if (checkNoInWrongPlace(nos)) {
-			answer += "Correct nos present";
+			answer += "Some numbers in wrong place";
 		}
 		
 //		Concatenate new line to the answer. 
