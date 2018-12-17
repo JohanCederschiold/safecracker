@@ -12,7 +12,7 @@ public class Numberpanel extends JPanel {
 	private JButton up;
 	private JButton down;
 	private JLabel number;
-	private String filePath = "C:\\Users\\ceder\\Documents\\Yrgo filer\\Programfiler\\CodeGame\\";
+//	private String filePath = "C:\\Users\\ceder\\Documents\\Yrgo filer\\Programfiler\\CodeGame\\";
 	private int currentno;
 	
 	
@@ -24,7 +24,7 @@ public class Numberpanel extends JPanel {
 		
 //		Add components
 		add(up = new JButton ("UP"), BorderLayout.NORTH);
-		add(number = new JLabel(new ImageIcon(filePath + makeFileName())), BorderLayout.CENTER);
+		add(number = new JLabel(new ImageIcon(getClass().getClassLoader().getResource(makeFileName()))), BorderLayout.CENTER);
 		add(down = new JButton ("DOWN"), BorderLayout.SOUTH);
 		
 //		Starting number
@@ -73,7 +73,7 @@ public class Numberpanel extends JPanel {
 
 		Click click = new Click();
 		click.thread.start();
-		number.setIcon(new ImageIcon(filePath + makeFileName()));
+		number.setIcon(new ImageIcon(getClass().getClassLoader().getResource(makeFileName())));
 		
 	}
 	
