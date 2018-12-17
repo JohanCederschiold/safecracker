@@ -79,6 +79,10 @@ public class GUIcode extends JFrame {
 		bottomPanel.add(guess = new JButton ("Guess"));
 		bottomPanel.add(newGame = new JButton("New game"));
 		
+//		TEST
+		Numberpanel np = new Numberpanel();
+		add(np, BorderLayout.WEST);
+		
 //		Set up new game.
 		tim = new Timer(1000, e -> countdown());
 		newGame();
