@@ -1,9 +1,0 @@
-SafeCracker
------------
-The object of the game is to crack the safe. 
-You explore possible codes by entering any three digit code. 
-This will result in the following feedback
-"You have N numbers correct." - You've N instanses where you've put the right number on the right slot.
-"No numbers in the right place." - Selfexplanatory. None of the numbers entered are i the right slot.
-"You have correct numbers in the wrong places". You picked some good numbers, but they are currently in the wrong slot. 
-Happy cracking....
